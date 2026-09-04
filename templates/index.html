@@ -1,0 +1,609 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurante Abaroa | AbaroaService</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <!-- Controles de navegación ocultos -->
+    <input type="radio" id="tab-inicio" name="navigation" class="tab-radio" checked>
+    <input type="radio" id="tab-menu" name="navigation" class="tab-radio">
+    <input type="radio" id="tab-reservas" name="navigation" class="tab-radio">
+
+    <!-- Controles de login/registro ocultos -->
+    <input type="radio" id="login-registro" name="auth-toggle" class="auth-radio" checked>
+    <input type="radio" id="login-iniciar" name="auth-toggle" class="auth-radio">
+
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <div class="brand-mark">
+                    <img src="{% static 'ImagenAbaroa.png' %}" alt="Logo Restaurante Abaroa">
+                </div>
+                <div>
+                    <p class="eyebrow">AbaroaService</p>
+                    <h1>Restaurante Abaroa</h1>
+                </div>
+            </div>
+            <nav aria-label="Menú principal" class="main-nav">
+                <ul class="nav-links">
+                    <li><label for="tab-inicio" class="nav-label">Inicio</label></li>
+                    <li><label for="tab-menu" class="nav-label">Menú</label></li>
+                    <li><label for="tab-reservas" class="nav-label">Reservas</label></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero section-content" id="inicio">
+            <div class="hero-copy">
+                <p class="eyebrow">Bienvenido a AbaroaService</p>
+                <h2>Tu restaurante favorito, ahora en línea</h2>
+                <p>Descubre nuestros deliciosos platos caseros, disfruta de colaciones y jugos naturales frescos. Regístrate hoy y comienza a disfrutar de nuestro servicio familiar con acceso a menú, reservas y promociones exclusivas.</p>
+            </div>
+
+            <!-- Panel de autenticación -->
+            <div class="auth-panel">
+                <!-- Formulario de Registro -->
+                <div class="auth-form auth-registro">
+                    <h3>Crear Cuenta</h3>
+                    <form class="form-auth" id="form-registro">
+                        <div class="form-group">
+                            <label for="reg-nombre">Nombre Completo</label>
+                            <input type="text" id="reg-nombre" name="nombre" placeholder="Tu nombre completo" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg-email">Correo Electrónico</label>
+                            <input type="email" id="reg-email" name="email" placeholder="tu@email.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg-telefono">Teléfono</label>
+                            <input type="tel" id="reg-telefono" name="telefono" placeholder="+56 9 1234 5678" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg-password">Contraseña</label>
+                            <input type="password" id="reg-password" name="password" placeholder="Mínimo 6 caracteres" required>
+                        </div>
+
+                        <button type="submit" class="btn-auth">Registrarse</button>
+                    </form>
+
+                    <p class="auth-toggle-text">
+                        ¿Ya tienes una cuenta? 
+                        <label for="login-iniciar" class="auth-link">Inicia Sesión</label>
+                    </p>
+                </div>
+
+                <!-- Formulario de Iniciar Sesión -->
+                <div class="auth-form auth-login">
+                    <h3>Inicia Sesión</h3>
+                    <form class="form-auth" id="form-login">
+                        <div class="form-group">
+                            <label for="login-email">Correo Electrónico</label>
+                            <input type="email" id="login-email" name="email" placeholder="tu@email.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="login-password">Contraseña</label>
+                            <input type="password" id="login-password" name="password" placeholder="Tu contraseña" required>
+                        </div>
+
+                        <button type="submit" class="btn-auth">Inicia Sesión</button>
+                    </form>
+
+                    <p class="auth-toggle-text">
+                        ¿No tienes cuenta? 
+                        <label for="login-registro" class="auth-link">Regístrate Aquí</label>
+                    </p>
+                </div>
+
+                <div class="auth-mensaje" id="auth-mensaje" style="display: none;"></div>
+            </div>
+        </section>
+
+        <section class="menu-section section-content" id="menu">
+            <div class="menu-header">
+                <div>
+                    <h2>Nuestro Menú</h2>
+                    <p class="subtext">Explora las categorías y elige tus favoritos para pedir con rapidez.</p>
+                </div>
+                <form class="search-bar" role="search">
+                    <label for="search" class="sr-only">Buscar platos</label>
+                    <input id="search" type="search" placeholder="Buscar platos, bebidas o colaciones" />
+                </form>
+            </div>
+
+            <div class="menu-grid-layout">
+                <aside class="menu-filter" aria-labelledby="filtro-alergenos">
+                    <h3 id="filtro-alergenos">Filtrar por categoría</h3>
+                    <p>Selecciona las categorías que deseas ver.</p>
+                    <form class="filter-form">
+                        <label><input type="checkbox" name="categoria" value="todos" class="filter-categoria" checked> Todos</label>
+                        <label><input type="checkbox" name="categoria" value="carnes" class="filter-categoria"> Carnes</label>
+                        <label><input type="checkbox" name="categoria" value="vegano" class="filter-categoria"> Vegano</label>
+                        <label><input type="checkbox" name="categoria" value="bebidas" class="filter-categoria"> Bebidas</label>
+                    </form>
+
+                    <h3 style="margin-top: 20px;">Filtrar por alérgenos</h3>
+                    <p>Selecciona los alérgenos que deseas evitar.</p>
+                    <form class="filter-form">
+                        <label><input type="checkbox" name="alergeno" value="gluten" class="filter-alergeno"> Gluten</label>
+                        <label><input type="checkbox" name="alergeno" value="lacteos" class="filter-alergeno"> Lácteos</label>
+                        <label><input type="checkbox" name="alergeno" value="huevo" class="filter-alergeno"> Huevo</label>
+                        <label><input type="checkbox" name="alergeno" value="mani" class="filter-alergeno"> Maní</label>
+                        <label><input type="checkbox" name="alergeno" value="soja" class="filter-alergeno"> Soja</label>
+                    </form>
+                </aside>
+
+                <div class="platos-grid">
+                    <article class="plato" data-category="carnes">
+                        <figure>
+                            <img src="https://losjarasrestaurant.cl/wp-content/uploads/2020/05/Lomo-a-lo-Pobre.jpg" alt="Lomo a lo Pobre">
+                            <figcaption class="badge">Personalizado</figcaption>
+                        </figure>
+                        <div class="plato-content">
+                            <h3>Lomo a lo Pobre</h3>
+                            <p>Corte jugoso con papas fritas, cebolla caramelizada y huevo. Alérgenos: gluten, huevo.</p>
+                            <div class="tags">
+                                <span data-alergeno="gluten">Gluten</span>
+                                <span data-alergeno="huevo">Huevo</span>
+                            </div>
+                            <div class="plato-footer">
+                                <span class="precio">$12.990 CLP</span>
+                                <button class="btn-add">Agregar</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="plato" data-category="carnes">
+                        <figure>
+                            <img src="https://tofuu.getjusto.com/orioneat-local/resized2/zs3KperB46QojFCb2-2400-x.webp" alt="Desayuno Completo">
+                            <figcaption class="badge">Favorito</figcaption>
+                        </figure>
+                        <div class="plato-content">
+                            <h3>Desayuno Completo</h3>
+                            <p>Huevos revueltos, pan tostado, jugo natural y café recién hecho. Alérgenos: gluten, huevo.</p>
+                            <div class="tags">
+                                <span data-alergeno="gluten">Gluten</span>
+                                <span data-alergeno="huevo">Huevo</span>
+                            </div>
+                            <div class="plato-footer">
+                                <span class="precio">$8.790 CLP</span>
+                                <button class="btn-add">Agregar</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="plato" data-category="vegano">
+                        <figure>
+                            <img src="https://recetasveganas.net/wp-content/uploads/2020/03/ensalada-quinoa-espinaca-rucula-salsa-mango-recetas-vegetarianas1.jpg" alt="Ensalada Vegana">
+                            <figcaption class="badge">Saludable</figcaption>
+                        </figure>
+                        <div class="plato-content">
+                            <h3>Ensalada Vegana</h3>
+                            <p>Mix de lechugas, tomates, palta y aderezo cítrico. Alérgenos: ninguno.</p>
+                            <div class="tags">
+                                <span>Vegano</span>
+                                <span>Sin gluten</span>
+                            </div>
+                            <div class="plato-footer">
+                                <span class="precio">$7.200 CLP</span>
+                                <button class="btn-add">Agregar</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="plato" data-category="bebidas">
+                        <figure>
+                            <img src="https://www.absolutdrinks.com/cdn-cgi/image/fit=cover,format=auto,height=540,quality=55,width=960/wp-content/uploads/ingredient_mango-juice_16x9_c39ef0c0569d5bf7f736ac6f2b10be33.jpg" alt="Jugo natural de mango servido en vaso alto">
+                            <figcaption class="badge">Fresco</figcaption>
+                        </figure>
+                        <div class="plato-content">
+                            <h3>Jugo Natural de Mango</h3>
+                            <p>Jugo natural de mango sin azúcar añadida, ideal para acompañar tu pedido. Alérgenos: ninguno.</p>
+                            <div class="tags">
+                                <span>Bebida</span>
+                                <span>Natural</span>
+                            </div>
+                            <div class="plato-footer">
+                                <span class="precio">$3.490 CLP</span>
+                                <button class="btn-add">Agregar</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="plato" data-category="carnes">
+                        <figure>
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJvgGShGBPLyTYZ3hObQkgNxNgwZUiKT4egw&s" alt="Barroluco">
+                            <figcaption class="badge">Clásico</figcaption>
+                        </figure>
+                        <div class="plato-content">
+                            <h3>Barroluco</h3>
+                            <p>Pan, Carne de vacuno, queso derretido. Alérgenos: gluten, lácteos.</p>
+                            <div class="tags">
+                                <span data-alergeno="lacteos">Lácteos</span>
+                                <span data-alergeno="gluten">Gluten</span>
+                            </div>
+                            <div class="plato-footer">
+                                <span class="precio">$3.000 CLP</span>
+                                <button class="btn-add">Agregar</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="plato" data-category="carnes">
+                        <figure>
+                            <img src="https://gourmet.iprospect.cl/wp-content/uploads/2024/06/MECHADA.png" alt="Sándwich de Carne">
+                            <figcaption class="badge">Clásico</figcaption>
+                        </figure>
+                        <div class="plato-content">
+                            <h3>Sándwich de Carne</h3>
+                            <p>Carne asada, queso fundido y ensalada en pan casero. Alérgenos: gluten, lácteos.</p>
+                            <div class="tags">
+                                <span data-alergeno="gluten">Gluten</span>
+                                <span data-alergeno="lacteos">Lácteos</span>
+                            </div>
+                            <div class="plato-footer">
+                                <span class="precio">$10.490 CLP</span>
+                                <button class="btn-add">Agregar</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="plato" data-category="carnes">
+                        <figure>
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF4pea9DYiAhEI8gjEQHprLAPqWzGu5Br2wA&s" alt="Completo Italiano">
+                            <figcaption class="badge">Clásico</figcaption>
+                        </figure>
+                        <div class="plato-content">
+                            <h3>Completo Italiano</h3>
+                            <p>Pan con mayonesa y palta, tomate. Alérgenos: gluten, lácteos.</p>
+                            <div class="tags">
+                                <span data-alergeno="gluten">Gluten</span>
+                                <span data-alergeno="lacteos">Lácteos</span>
+                            </div>
+                            <div class="plato-footer">
+                                <span class="precio">$2.000 CLP</span>
+                                <button class="btn-add">Agregar</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="plato" data-category="bebidas">
+                        <figure>
+                            <img src="https://imag.bonviveur.com/limonada.jpg" alt="Limonada Natural">
+                            <figcaption class="badge">Refrescante</figcaption>
+                        </figure>
+                        <div class="plato-content">
+                            <h3>Limonada Natural</h3>
+                            <p>Limonada preparada con ingredientes frescos y aroma de hierbas. Alérgenos: ninguno.</p>
+                            <div class="tags">
+                                <span>Bebida</span>
+                                <span>Natural</span>
+                            </div>
+                            <div class="plato-footer">
+                                <span class="precio">$2.990 CLP</span>
+                                <button class="btn-add">Agregar</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="plato" data-category="vegano">
+                        <figure>
+                            <img src="https://imag.bonviveur.com/limonada.jpg" alt="Jugo Natural Cítrico">
+                            <figcaption class="badge">Refrescante</figcaption>
+                        </figure>
+                        <div class="plato-content">
+                            <h3>Jugo Natural Cítrico</h3>
+                            <p>Jugo fresco de naranja, limón y pomelo sin azúcar añadida. Alérgenos: ninguno.</p>
+                            <div class="tags">
+                                <span>Bebida</span>
+                                <span>Natural</span>
+                            </div>
+                            <div class="plato-footer">
+                                <span class="precio">$2.990 CLP</span>
+                                <button class="btn-add">Agregar</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="reservas-section section-content" id="reservas">
+            <div class="section-header">
+                <h2>Reservas de Mesas</h2>
+                <p>Visualiza la disponibilidad del salón en tiempo real. Selecciona una mesa disponible para continuar.</p>
+            </div>
+
+            <div class="reserva-container">
+                <!-- Visualización del salón -->
+                <div class="salon-view">
+                    <div class="leyenda-mesas">
+                        <div class="leyenda-item">
+                            <div class="leyenda-color disponible"></div>
+                            <span>Disponible</span>
+                        </div>
+                        <div class="leyenda-item">
+                            <div class="leyenda-color ocupado"></div>
+                            <span>Ocupado</span>
+                        </div>
+                        <div class="leyenda-item">
+                            <div class="leyenda-color reservando"></div>
+                            <span>En proceso de reserva</span>
+                        </div>
+                    </div>
+
+                    <div class="grid-mesas-salon">
+                        <label class="mesa mesa-disponible" data-mesa="1">
+                            <input type="radio" name="mesa-seleccion" value="1" class="mesa-radio">
+                            <span class="mesa-numero">Mesa 1</span>
+                        </label>
+                        <label class="mesa mesa-disponible" data-mesa="3">
+                            <input type="radio" name="mesa-seleccion" value="3" class="mesa-radio">
+                            <span class="mesa-numero">Mesa 3</span>
+                        </label>
+            
+                        <div class="espacio-pasillo"></div> 
+    
+                        <label class="mesa mesa-disponible" data-mesa="5">
+                            <input type="radio" name="mesa-seleccion" value="5" class="mesa-radio">
+                            <span class="mesa-numero">Mesa 5</span>
+                        </label>
+                        <label class="mesa mesa-grande mesa-disponible" data-mesa="8">
+                            <input type="radio" name="mesa-seleccion" value="8" class="mesa-radio">
+                            <span class="mesa-numero">Mesa Grande 8</span>
+                        </label>
+
+                        <label class="mesa mesa-ocupado" data-mesa="2">
+                    <input type="radio" name="mesa-seleccion" value="2" class="mesa-radio" disabled>
+                    <span class="mesa-numero">Mesa 2</span>
+                        </label>
+                        <label class="mesa mesa-disponible" data-mesa="4">
+                    <input type="radio" name="mesa-seleccion" value="4" class="mesa-radio">
+                    <span class="mesa-numero">Mesa 4</span>
+                        </label>
+    
+                    <div class="espacio-pasillo"></div> 
+    
+                        <label class="mesa mesa-disponible" data-mesa="6">
+                    <input type="radio" name="mesa-seleccion" value="6" class="mesa-radio">
+                    <span class="mesa-numero">Mesa 6</span>
+                        </label>
+                        <label class="mesa mesa-grande mesa-reservando" data-mesa="7">
+                    <input type="radio" name="mesa-seleccion" value="7" class="mesa-radio">
+                    <span class="mesa-numero">Mesa Grande 7</span>
+                    </label>
+                </div>
+                    </div>
+                </div>
+
+                <!-- Formulario de reserva -->
+                <aside class="formulario-reserva" id="formulario-reserva">
+                    <h3>Reserva de Mesa</h3>
+                    <form class="form-reserva" id="form-reserva">
+                        <div class="form-group">
+                            <label for="nombreCompleto">Nombre Completo</label>
+                            <input type="text" id="nombreCompleto" name="nombreCompleto" placeholder="Tu nombre completo" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="numeroTelefono">Número de Teléfono</label>
+                            <input type="tel" id="numeroTelefono" name="numeroTelefono" placeholder="+56 9 1234 5678" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fechaReserva">Fecha de Reserva</label>
+                            <input type="date" id="fechaReserva" name="fechaReserva" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="horaReserva">Hora de Reserva</label>
+                            <input type="time" id="horaReserva" name="horaReserva" placeholder="hh:mm" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mesaSeleccionada">Mesa Seleccionada</label>
+                            <input type="text" id="mesaSeleccionada" name="mesaSeleccionada" readonly placeholder="Selecciona una mesa">
+                        </div>
+
+                        <button type="submit" class="btn-reservar">Reservar Ahora</button>
+                    </form>
+
+                    <div class="mensaje-reserva" id="mensaje-reserva" style="display: none;">
+                        <p id="texto-mensaje"></p>
+                    </div>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div>
+                <h3>Restaurante Abaroa</h3>
+                <p>Restaurante familiar con desayunos, almuerzos, colaciones y jugos naturales hechos con cariño.</p>
+            </div>
+            <div>
+                <h3>Horarios</h3>
+                <p>Lunes a Viernes: 08:00 - 16:00</p>
+                <p>Sábado: 09:00 - 15:00</p>
+            </div>
+            <div>
+                <h3>Contacto</h3>
+                <p>info@restauranteabaroa.cl</p>
+                <p>+56 9 9523 9355</p>
+            </div>
+            <div>
+                <h3>Ubicación</h3>
+                <p>Pasaje Yareta 25</p>
+                <p>Alto Hospicio, La Region de Tarapaca</p>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 Restaurante Abaroa. Todos los derechos reservados.</p>
+    </footer>
+    <script>
+        // ==================== SISTEMA DE LOGIN/REGISTRO ====================
+        const formRegistro = document.getElementById('form-registro');
+        const formLogin = document.getElementById('form-login');
+        const authMensaje = document.getElementById('auth-mensaje');
+
+        formRegistro.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nombre = document.getElementById('reg-nombre').value;
+            const email = document.getElementById('reg-email').value;
+            
+            authMensaje.innerHTML = `<p style="color: #155724; background: #d4edda; padding: 14px; border-radius: 8px;">✓ ¡Bienvenido ${nombre}! Tu cuenta ha sido creada exitosamente. Ahora puedes explorar nuestro menú.</p>`;
+            authMensaje.style.display = 'block';
+            
+            setTimeout(() => {
+                formRegistro.reset();
+                document.getElementById('tab-menu').checked = true;
+            }, 2000);
+        });
+
+        formLogin.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            
+            authMensaje.innerHTML = `<p style="color: #155724; background: #d4edda; padding: 14px; border-radius: 8px;">✓ ¡Bienvenido de vuelta! Has iniciado sesión correctamente.</p>`;
+            authMensaje.style.display = 'block';
+            
+            setTimeout(() => {
+                formLogin.reset();
+                document.getElementById('tab-menu').checked = true;
+            }, 2000);
+        });
+
+        // ==================== SISTEMA DE FILTROS ====================
+        const filterCategorias = document.querySelectorAll('.filter-categoria');
+        const filterAlergenos = document.querySelectorAll('.filter-alergeno');
+        const platos = document.querySelectorAll('.plato');
+        const searchInput = document.getElementById('search');
+
+        function aplicarFiltros() {
+            const categoriasSeleccionadas = Array.from(filterCategorias)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+            
+            const alejenosSeleccionados = Array.from(filterAlergenos)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+
+            const textoBusqueda = searchInput.value.toLowerCase();
+
+            platos.forEach(plato => {
+                let mostrar = true;
+
+                // Filtro por categoría
+                const categoria = plato.getAttribute('data-category');
+                if (categoriasSeleccionadas.length > 0 && !categoriasSeleccionadas.includes(categoria)) {
+                    mostrar = false;
+                }
+
+                // Filtro por alérgenos (ocultar si el plato contiene alguno seleccionado)
+                if (alejenosSeleccionados.length > 0) {
+                    const tags = plato.querySelectorAll('[data-alergeno]');
+                    const tieneAlergeno = Array.from(tags).some(tag => 
+                        alejenosSeleccionados.includes(tag.getAttribute('data-alergeno'))
+                    );
+                    if (tieneAlergeno) {
+                        mostrar = false;
+                    }
+                }
+
+                // Filtro por búsqueda
+                if (textoBusqueda.length > 0) {
+                    const nombre = plato.querySelector('h3').textContent.toLowerCase();
+                    const descripcion = plato.querySelector('p').textContent.toLowerCase();
+                    if (!nombre.includes(textoBusqueda) && !descripcion.includes(textoBusqueda)) {
+                        mostrar = false;
+                    }
+                }
+
+                plato.style.display = mostrar ? 'flex' : 'none';
+            });
+        }
+
+        filterCategorias.forEach(checkbox => {
+            checkbox.addEventListener('change', aplicarFiltros);
+        });
+
+        filterAlergenos.forEach(checkbox => {
+            checkbox.addEventListener('change', aplicarFiltros);
+        });
+
+        searchInput.addEventListener('input', aplicarFiltros);
+
+        // ==================== SISTEMA DE RESERVA DE MESAS ====================
+        const mesasRadios = document.querySelectorAll('.mesa-radio');
+        const mesasLabels = document.querySelectorAll('.mesa');
+        const inputMesaSeleccionada = document.getElementById('mesaSeleccionada');
+        const formReserva = document.getElementById('form-reserva');
+        const mensajeReserva = document.getElementById('mensaje-reserva');
+        const textoMensaje = document.getElementById('texto-mensaje');
+
+        mesasRadios.forEach(radio => {
+            radio.addEventListener('change', function(e) {
+                if (this.checked) {
+                    const mesaLabel = this.closest('.mesa');
+                    const numeroMesa = mesaLabel.getAttribute('data-mesa');
+                    const nombreMesa = mesaLabel.querySelector('.mesa-numero').textContent;
+                    
+                    inputMesaSeleccionada.value = nombreMesa;
+                    
+                    mesasLabels.forEach(label => {
+                        label.classList.remove('reservando');
+                    });
+                    mesaLabel.classList.add('reservando');
+                    
+                    document.getElementById('formulario-reserva').scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        const inputFecha = document.getElementById('fechaReserva');
+        const today = new Date().toISOString().split('T')[0];
+        inputFecha.setAttribute('min', today);
+
+        formReserva.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nombre = document.getElementById('nombreCompleto').value;
+            const telefono = document.getElementById('numeroTelefono').value;
+            const fecha = document.getElementById('fechaReserva').value;
+            const hora = document.getElementById('horaReserva').value;
+            const mesa = document.getElementById('mesaSeleccionada').value;
+
+            if (nombre && telefono && fecha && hora && mesa) {
+                const mesaSeleccionada = document.querySelector('.mesa.reservando');
+                if (mesaSeleccionada) {
+                    mesaSeleccionada.classList.remove('reservando');
+                    mesaSeleccionada.classList.add('ocupado');
+                    mesaSeleccionada.querySelector('input').disabled = true;
+                }
+
+                textoMensaje.textContent = `¡Reserva confirmada! ${nombre}, tu reserva para la ${mesa} está confirmada para el ${fecha} a las ${hora}. Nos vemos pronto.`;
+                mensajeReserva.style.display = 'block';
+                mensajeReserva.classList.add('exito');
+
+                setTimeout(() => {
+                    formReserva.reset();
+                    inputMesaSeleccionada.value = '';
+                    mensajeReserva.style.display = 'none';
+                    mensajeReserva.classList.remove('exito');
+                    
+                    mesasRadios.forEach(radio => radio.checked = false);
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>

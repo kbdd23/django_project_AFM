@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Restaurante Abaroa | AbaroaService{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <div class="brand-mark">
+                    <img src="{% static 'ImagenAbaroa.png' %}" alt="Logo Restaurante Abaroa">
+                </div>
+                <div>
+                    <p class="eyebrow">AbaroaService</p>
+                    <h1>Restaurante Abaroa</h1>
+                </div>
+            </div>
+            <nav aria-label="Menú principal" class="main-nav">
+                <ul class="nav-links">
+                    <li><a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Inicio</a></li>
+                    <li><a class="nav-link {% if request.resolver_match.url_name == 'menu' %}active{% endif %}" href="{% url 'menu' %}">Menú</a></li>
+                    <li><a class="nav-link {% if request.resolver_match.url_name == 'crear_reserva' %}active{% endif %}" href="{% url 'booking:crear_reserva' %}">Reservas</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div>
+                <h3>Restaurante Abaroa</h3>
+                <p>Restaurante familiar con desayunos, almuerzos, colaciones y jugos naturales hechos con cariño.</p>
+            </div>
+            <div>
+                <h3>Horarios</h3>
+                <p>Lunes a Viernes: 08:00 - 16:00</p>
+                <p>Sábado: 09:00 - 15:00</p>
+            </div>
+            <div>
+                <h3>Contacto</h3>
+                <p>info@restauranteabaroa.cl</p>
+                <p>+56 9 9523 9355</p>
+            </div>
+            <div>
+                <h3>Ubicación</h3>
+                <p>Pasaje Yareta 25</p>
+                <p>Alto Hospicio, La Region de Tarapaca</p>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 Restaurante Abaroa. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

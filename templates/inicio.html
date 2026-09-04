@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio | Restaurante Abaroa{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<section class="hero section-content" id="inicio">
+    <div class="hero-copy">
+        <p class="eyebrow">Bienvenido a AbaroaService</p>
+        <h2>Estás logeado</h2>
+        <p>Hola, {{ user.first_name }}. Tu sesión está activa, puedes navegar por el menú y hacer reservas.</p>
+    </div>
+    <div class="estado-logeado">
+        <a class="btn-logout" href="{% url 'logout' %}">Cerrar sesión</a>
+    </div>
+</section>
+{% else %}
+<section class="hero section-content" id="inicio">
+    <div class="hero-copy">
+        <p class="eyebrow">Bienvenido a AbaroaService</p>
+        <h2>Tu restaurante favorito, ahora en línea</h2>
+        <p>Descubre nuestros deliciosos platos caseros, disfruta de colaciones y jugos naturales frescos. Regístrate hoy y comienza a disfrutar de nuestro servicio familiar con acceso a menú, reservas y promociones exclusivas.</p>
+    </div>
+    <div class="hero-cta">
+        <a class="btn-reservar-gigante" href="{% url 'login' %}">Reservar</a>
+    </div>
+</section>
+{% endif %}
+{% endblock %}
