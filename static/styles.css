@@ -77,6 +77,8 @@ button {
     display: flex;
     align-items: center;
     gap: 14px;
+    text-decoration: none;
+    color: inherit;
 }
 
 .brand-mark {
@@ -106,34 +108,6 @@ button {
 .brand h1 {
     font-size: 1.6rem;
     line-height: 1.1;
-}
-
-.nav-links {
-    display: flex;
-    gap: 22px;
-    list-style: none;
-}
-
-.nav-link {
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.2s ease, background 0.2s ease;
-    padding: 8px 12px;
-    border-radius: 6px;
-    display: block;
-}
-
-.nav-link:hover,
-.nav-link:focus-visible {
-    color: #ffd966;
-    background-color: rgba(255, 159, 28, 0.1);
-}
-
-/* Navegación activa */
-.nav-link.active {
-    color: #ffd966;
-    background-color: rgba(255, 159, 28, 0.2);
 }
 
 main {
@@ -309,12 +283,6 @@ main {
 }
 
 /* Botón gigante de Reservar en el landing */
-.hero-cta {
-    display: flex;
-    justify-content: center;
-    margin-top: 40px;
-}
-
 .btn-reservar-gigante {
     background: var(--accent);
     color: #8b4513;
@@ -337,12 +305,426 @@ main {
     transform: translateY(0);
 }
 
-/* Estado "Estás logeado" */
-.estado-logeado {
-    display: flex;
-    justify-content: center;
-    margin-top: 32px;
+/* Botón gigante de Menú: misma geometría que Reservar, color rojo de marca */
+.btn-menu-gigante {
+    background: var(--danger);
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 800;
+    padding: 24px 72px;
+    border-radius: 999px;
+    text-decoration: none;
+    box-shadow: 0 20px 40px rgba(214, 54, 42, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+.btn-menu-gigante:hover,
+.btn-menu-gigante:focus-visible {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 28px 56px rgba(214, 54, 42, 0.45);
+}
+
+.btn-menu-gigante:active {
+    transform: translateY(0);
+}
+
+/* Botones del hero apilados: Reservar arriba, Menú debajo.
+   Tamaños fluidos: encogen con la ventana en vez de desbordarla. */
+.hero-acciones {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(10px, 1.2vh, 18px);
+    margin-top: clamp(20px, 4vh, 40px);
+}
+
+.hero-acciones .btn-reservar-gigante,
+.hero-acciones .btn-menu-gigante {
+    width: min(100%, 420px);
+    text-align: center;
+    font-size: clamp(1.05rem, 0.55rem + 1.2vw, 2rem);
+    padding: clamp(14px, 0.6rem + 1vh, 24px) clamp(18px, 3vw, 72px);
+}
+
+/* Full-bleed: el hero se sale del max-width de main para tocar los bordes
+   de la pantalla. overflow-x: clip evita la barra horizontal que deja el
+   100vw sin romper el header sticky (clip no crea contenedor de scroll). */
+html {
+    overflow-x: clip;
+}
+
+/* Carrusel de fondo a pantalla completa: es el contenedor del texto.
+   La altura del header la mide main.js en vivo y la publica como
+   --altura-header-real; el valor de abajo es solo el respaldo por si el
+   JS no carga. */
+.hero-carrusel {
+    --altura-header: 93px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    min-height: calc(100vh - var(--altura-header-real, var(--altura-header)));
+    min-height: calc(100dvh - var(--altura-header-real, var(--altura-header)));
+    padding: 36px 24px 64px;
+}
+
+/* Botón de cuenta del header: Perfil / Iniciar sesión */
+.nav-accion {
+    display: inline-block;
+    padding: 10px 22px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #8b4513;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nav-accion:hover,
+.nav-accion:focus-visible {
+    color: #8b4513;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* ==================== PANEL DEL CLIENTE (vista perfil) ==================== */
+.panel-cliente {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 32px;
+    padding: 32px 24px 64px;
+    align-items: start;
+}
+
+.panel-lateral {
+    position: sticky;
+    top: 110px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px 20px;
+    box-shadow: 0 18px 36px rgba(59, 44, 32, 0.06);
+}
+
+.panel-eyebrow {
+    color: var(--primary);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    margin-bottom: 6px;
+}
+
+.panel-titulo {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    overflow-wrap: anywhere;
+}
+
+.panel-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.panel-opcion {
+    display: block;
+    padding: 11px 16px;
+    border-radius: 12px;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.panel-opcion:hover,
+.panel-opcion:focus-visible {
+    background: var(--surface-strong);
+}
+
+.panel-opcion.activa {
+    background: var(--primary);
+    color: #ffffff;
+}
+
+.panel-salir {
+    display: block;
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    color: var(--danger);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.panel-contenido {
+    min-width: 0;
+}
+
+.panel-titulo-seccion {
+    font-size: 1.6rem;
+    margin-bottom: 6px;
+}
+
+.panel-nota {
+    color: var(--text-muted);
+    margin-bottom: 24px;
+}
+
+.panel-vacio {
+    color: var(--text-muted);
+    font-style: italic;
+    padding: 18px 20px;
+    background: var(--surface);
+    border: 1px dashed var(--border);
+    border-radius: 14px;
+}
+
+.panel-acciones {
+    margin-top: 28px;
+}
+
+/* Listas de reservas del panel */
+.lista-panel {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 760px;
+}
+
+.item-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 10px 22px rgba(59, 44, 32, 0.04);
+}
+
+.item-panel-datos {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.item-panel-titulo {
+    font-weight: 700;
+}
+
+.item-panel-meta {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+}
+
+.etiqueta-estado {
+    flex-shrink: 0;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.etiqueta-estado.confirmado {
+    background: rgba(42, 143, 79, 0.14);
+    color: var(--success);
+}
+
+.etiqueta-estado.cancelado {
+    background: rgba(214, 54, 42, 0.12);
+    color: var(--danger);
+}
+
+/* Tarjeta de datos del usuario */
+.tarjeta-perfil {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    max-width: 620px;
+    box-shadow: 0 18px 36px rgba(59, 44, 32, 0.06);
+}
+
+.tarjeta-perfil dl {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 12px 16px;
+    margin-bottom: 28px;
+}
+
+.tarjeta-perfil dt {
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.tarjeta-perfil dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.tarjeta-perfil .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.tarjeta-perfil .campo label {
+    font-weight: 600;
+}
+
+.tarjeta-perfil .campo input {
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #ffffff;
+    color: var(--text);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tarjeta-perfil .campo input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(193, 125, 44, 0.12);
+}
+
+.btn-panel {
+    display: inline-block;
+    padding: 12px 28px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--primary);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-panel:hover,
+.btn-panel:focus-visible {
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(193, 125, 44, 0.3);
+}
+
+/* El panel pasa a una sola columna cuando no cabe la barra lateral */
+@media (max-width: 900px) {
+    .panel-cliente {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 24px 18px 48px;
+    }
+
+    .panel-lateral {
+        position: static;
+    }
+
+    .panel-menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .tarjeta-perfil dl {
+        grid-template-columns: 1fr;
+        gap: 4px 0;
+    }
+
+    .tarjeta-perfil dd {
+        margin-bottom: 12px;
+    }
+
+    .item-panel {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+.hero-fondo {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.hero-fondo .carousel,
+.hero-fondo .carousel-inner,
+.hero-fondo .carousel-item {
+    height: 100%;
+}
+
+.hero-fondo .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Velo: gradiente negro sobre las fotos. El ULTIMO numero de cada rgba es
+   la opacidad: 0 = no tapa nada, 1 = tapa todo. Hay 3 paradas; la de abajo
+   es la mas oscura porque ahi vive el texto. */
+.hero-velo {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.15) 0%,
+        rgba(0, 0, 0, 0.30) 45%,
+        rgba(0, 0, 0, 0.62) 100%
+    );
+}
+
+.hero-contenido {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Con velo negro el texto marrón del hero no se lee: pasa a claro */
+.hero-carrusel .hero-copy .eyebrow {
+    color: #ffd966;
+    font-size: clamp(0.9rem, 0.55rem + 0.85vw, 1.7rem);
+}
+
+.hero-carrusel .hero-copy h2 {
+    color: #ffffff;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+    font-size: clamp(1.6rem, 1rem + 2.4vw, 2.8rem);
+}
+
+.hero-carrusel .hero-copy p {
+    color: rgba(255, 255, 255, 0.88);
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+    font-size: clamp(0.95rem, 0.85rem + 0.35vw, 1.15rem);
+}
+
+/* Ventanas bajas: el hero deja de exigir pantalla completa antes de
+   apretar el contenido contra el footer. */
+@media (max-height: 680px) {
+    .hero-carrusel {
+        min-height: auto;
+        padding-top: 24px;
+        padding-bottom: 40px;
+    }
+}
+
+/* Ventanas angostas: el header pasa a dos filas (brand + nav) y crece. */
+@media (max-width: 720px) {
+    .hero-carrusel {
+        --altura-header: 157px;
+    }
+}
+
 
 .btn-logout {
     background: var(--danger);
@@ -914,19 +1296,6 @@ main {
     .header-inner {
         flex-direction: column;
         align-items: flex-start;
-    }
-
-    .nav-links {
-        flex-direction: row;
-        gap: 12px;
-        width: 100%;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-    }
-
-    .nav-link {
-        padding: 10px 14px;
-        font-size: 0.95rem;
     }
 
     .hero-copy {

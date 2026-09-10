@@ -59,3 +59,30 @@ if (platos.length > 0) {
 
     searchInput.addEventListener('input', aplicarFiltros);
 }
+
+// ==================== ALTO REAL DEL HEADER ====================
+// El hero mide "pantalla completa menos el header". El header cambia de
+// alto al redimensionar (bajo los 720px pasa a dos filas), asi que en vez
+// de un numero fijo en el CSS lo medimos en vivo y lo publicamos como
+// variable CSS. El valor escrito en styles.css queda solo de respaldo.
+(function () {
+    'use strict';
+
+    const encabezado = document.querySelector('.site-header');
+    const hero = document.querySelector('.hero-carrusel');
+    if (!encabezado || !hero) {
+        return; // esta pagina no tiene hero a pantalla completa
+    }
+
+    function publicarAltoDelHeader() {
+        document.documentElement.style.setProperty(
+            '--altura-header-real',
+            encabezado.offsetHeight + 'px'
+        );
+    }
+
+    // ResizeObserver dispara cada vez que el header cambia de tamaño,
+    // incluso si el cambio lo provoca un media query y no la ventana.
+    new ResizeObserver(publicarAltoDelHeader).observe(encabezado);
+    publicarAltoDelHeader();
+})();
