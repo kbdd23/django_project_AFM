@@ -1,4 +1,3 @@
-
 import os
 from pathlib import Path
 
@@ -7,14 +6,9 @@ from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Cargar credenciales de MongoDB Atlas (no versionado)
 load_dotenv(BASE_DIR / 'atlas-credentials.env')
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-v!j!fq9ld2vory*gf-d2lk0()c^wyblwesto^m@=5=2sm(hq$&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -34,7 +28,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_mongodb_backend',
     "pages", #Tratar de mantener con comillas dobles las apps creadas para diferenciarlas de las dependencias
-    "booking"
+    "booking",
+    "orders"
 ]
 
 # Modelo de usuario personalizado (pages.User)
@@ -94,10 +89,6 @@ MIGRATION_MODULES = {
     'contenttypes': 'mongo_migrations.contenttypes',
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -114,12 +105,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'America/Santiago'
+TIME_ZONE = 'America/Santiago' #Hora chilena
 
 USE_I18N = True
 
@@ -131,7 +119,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_DIRS = [BASE_DIR / 'static'] #Django buscará aquí los archivos del proyecto.
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

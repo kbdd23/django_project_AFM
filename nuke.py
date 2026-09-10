@@ -2,7 +2,7 @@
 
 No es parte del flujo de la aplicacion: existe para depurar cuando los
 datos de prueba estorban (migraciones sucias, mesas duplicadas, reservas
-de prueba encadenadas, usuarios basura).
+de prueba encadenadas, usuarios basura, etc).
 
 Uso:
     python nuke.py          vacia los documentos de todas las colecciones
