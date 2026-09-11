@@ -29,11 +29,17 @@ INSTALLED_APPS = [
     'django_mongodb_backend',
     "pages", #Tratar de mantener con comillas dobles las apps creadas para diferenciarlas de las dependencias
     "booking",
+    "menu",
     "orders"
 ]
 
 # Modelo de usuario personalizado (pages.User)
 AUTH_USER_MODEL = 'pages.User'
+
+# A donde manda @login_required y mesero_required cuando no hay sesion.
+# Sin esto Django usa el default /accounts/login/, que en este proyecto no
+# existe: el usuario recibia un 404 en vez del formulario de entrada.
+LOGIN_URL = 'login'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

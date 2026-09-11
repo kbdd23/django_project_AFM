@@ -22,7 +22,13 @@
             </a>
             <nav aria-label="Cuenta" class="main-nav">
                 {% if user.is_authenticated %}
-                    {% if request.resolver_match.url_name == 'perfil' %}
+                    {% if user.rol == 'mesero' %}
+                        {% if request.resolver_match.url_name == 'mesero' %}
+                            <a class="nav-accion" href="{% url 'home' %}">Inicio</a>
+                        {% else %}
+                            <a class="nav-accion" href="{% url 'mesero' %}">Salón</a>
+                        {% endif %}
+                    {% elif request.resolver_match.url_name == 'perfil' %}
                         <a class="nav-accion" href="{% url 'home' %}">Inicio</a>
                     {% else %}
                         <a class="nav-accion" href="{% url 'perfil' %}">Perfil</a>

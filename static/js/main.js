@@ -6,9 +6,12 @@ const searchInput = document.getElementById('search');
     //MENU
 if (platos.length > 0) {
     function aplicarFiltros() {
+        // "Todos" no es una categoria: es la ausencia de filtro. Si viajara
+        // como valor, ningun plato la tendria y la grilla se vaciaria.
         const categoriasSeleccionadas = Array.from(filterCategorias)
             .filter(cb => cb.checked)
-            .map(cb => cb.value);
+            .map(cb => cb.value)
+            .filter(valor => valor !== 'todos');
 
         const alejenosSeleccionados = Array.from(filterAlergenos)
             .filter(cb => cb.checked)

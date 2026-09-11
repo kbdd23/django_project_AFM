@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class OrdersConfig(AppConfig):
+class MenuConfig(AppConfig):
     default_auto_field = 'django_mongodb_backend.fields.ObjectIdAutoField'
-    name = 'orders'
+    name = 'menu'
